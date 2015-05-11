@@ -8,7 +8,7 @@ int main(){
 	int i,j,k,l,candidate,counter=0,counter2=0,flag=0,solution=0;
 
 	FILE * fp;
-	fp = fopen ("test.txt","r");
+	fp = fopen ("in.txt","r");
 
 	fscanf(fp,"%d\n",&nPuzzles);
 
