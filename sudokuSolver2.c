@@ -8,7 +8,7 @@ int main(){
 	int i,j,k,l,candidate,counter=0,counter2=0,flag=0,solution=0;
 
 	FILE * fp;
-	fp = fopen ("in.txt","r");
+	fp = fopen ("test.txt","r");
 
 	fscanf(fp,"%d\n",&nPuzzles);
 
@@ -77,7 +77,10 @@ int main(){
 					if(flag==0){
 						for(k=0;k<subgrid;k++){
 							for(l=0;l<subgrid;l++){
-								if(sudoku[(((x[counter2])/subgrid)*(subgrid))+k][(y[counter2]/subgrid)*(subgrid)+l]==candidate){
+								int a = (((x[counter2])/subgrid)*(subgrid))+k;
+								int b = (y[counter2]/subgrid)*(subgrid)+l;
+								printf("%d %d %d %d\n", a, b, candidate, sudoku[a][b]);
+								if(sudoku[a][b]==candidate){
 									flag=1;
 									break;
 								}

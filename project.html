@@ -41,10 +41,11 @@
 
 	function solveSudoku(gridSize, grid) {
 		var move, start;
-		var counter = 0, counter2 = 0, tmp, candidate, flag = 0, solution;
+		var counter = 0, counter2 = 0, tmp = 0, candidate, flag = 0, solution;
 		var x=[], y=[];
-		var nopts[(gridSize*gridSize)+2];
-		var option[(gridSize*gridSize)+2][gridSize+2];		//array stacks of option
+		var dim = (gridSize*gridSize)+2;
+		var nopts = new Array();
+		var option = new Array();		//array stacks of option
 		var subgrid = Math.sqrt(gridSize);
 
 		for (var i = 0; i < gridSize; i++) {
@@ -61,6 +62,11 @@
 		move = start = 0;
 		nopts[start] = 1;
 
+		//creates a 2D array for option: option[][]
+		for (var i = 0; i < dim; i++) {
+			option[i] = new Array();
+		}
+
 		while(nopts[start] > 0){
 			if(nopts[move] > 0 && move <= counter){
 				move++;
@@ -68,7 +74,7 @@
 				tmp = 0;
 				if(move <= gridSize*gridSize){
 					for(candidate = 1; candidate <= gridSize; candidate++){
-						for(int k = 0; k < gridSize; k++){
+						for(var k = 0; k < gridSize; k++){
 							if (grid[x[counter2]][k] == candidate){
 								flag = 1;
 								break;
@@ -81,9 +87,13 @@
 						if(flag == 0){
 							for (var k = 0; k < subgrid; k++) {
 								for(var l = 0; l < subgrid; l++){
-									if(grid[(((x[counter2])/subgrid)*(subgrid))+k][(y[counter2]/subgrid)*(subgrid)+l]==candidate){
+									var a = (((x[counter2])/subgrid)*(subgrid))+k;
+									var b = (y[counter2]/subgrid)*(subgrid)+l;
+									console.log(a + " " +b+ " " + candidate + " " + grid[a][b]);
+									if(grid[a][b] == candidate){
 										flag = 1;
-										break
+										console.log("BREAKKK");
+										break;
 									}
 								}
 							}
@@ -109,8 +119,8 @@
 					console.log("Move: "+counter);
 					solution++;
 					console.log("Solution: "+solution);
-					for (int i = 0; i < gridSize; i++){
-						for(int j = 0; j < gridSize; j++){
+					for (var i = 0; i < gridSize; i++){
+						for(var j = 0; j < gridSize; j++){
 							console.log(grid[i][j]);
 						}
 					}
@@ -154,7 +164,7 @@
 		                	gridSize = subgrid * subgrid;
 		                	
 		                	grid[i] = new Array();
-		                	console.log(grid[i]);
+		                	//console.log(grid[i]);
 		                	for (var j = 0; j < gridSize; j++) {
 		                		grid[i].push(tokens[line].replace(/\s+/g, ''));
 		                		line++;
@@ -163,7 +173,7 @@
 		                	console.log(grid[i]);
 		                	createTable(gridSize, grid[i]);
 		                	solveSudoku(gridSize, grid[i]);
-		                };
+		                }
 
 		                		                
 		            } 
