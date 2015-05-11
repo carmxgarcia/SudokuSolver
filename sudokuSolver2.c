@@ -5,7 +5,7 @@ int main(){
 	
 	int nPuzzles,subgrid,grid,sudoku[100][100];
 	int start, move;
-	int i,j,k,l,candidate,counter=0,counter2=0,flag=0,solution=0;
+	int i,j,k,l,candidate,counter=0,counter2=0,flag=0,flag2=0,flag3=0,solution=0;
 
 	FILE * fp;
 	fp = fopen ("in.txt","r");
@@ -26,8 +26,6 @@ int main(){
 	int nopts[(grid*grid)+2];
 
 	int option[(grid*grid)+2][grid+2]; //array stacks of options
-	
-
 	
 
 	for(i=0;i<grid;i++){
@@ -119,6 +117,7 @@ int main(){
 			if(move==counter){
 				printf("Move: %d\n", counter);
 				solution++;
+
 				printf("----------------SOLUTION %d-----------------\n",solution);
 				for(i=0;i<grid;i++){
 					for(j=0;j<grid;j++){
@@ -126,7 +125,70 @@ int main(){
 					}
 					printf("\n");
 				}
-		
+				
+				
+
+				for(i=0,l=grid-1;i<grid-1,l>0;i++,l--){
+					for(j=i+1,k=grid-1;j<grid,k>0;j++,k--){
+						if(sudoku[i][i]==sudoku[j][j] || sudoku[i][l]==sudoku[j][k-i-1]){
+							flag2=1;
+							break;
+						}
+					}					
+				}
+
+				if(flag2!=1){
+					printf("----------------X %d-----------------\n",solution);
+					for(i=0;i<grid;i++){
+						for(j=0;j<grid;j++){
+							printf("%d ",sudoku[i][j]);
+						}
+					printf("\n");
+					}
+				}
+				flag2=0;
+
+				if(grid %2==0){
+					flag3=1;
+				}
+				else{
+					for(i=0,l=grid-1;i<grid-1,l>0;i++,l--){
+						if(i<grid/2){
+							for(j=i+1,k=grid-1;j<grid/2,k>0;j++,k--){
+								if(sudoku[i][i]==sudoku[j][j] || sudoku[i][l]==sudoku[j][k-i-1]){
+									flag3=1;
+									break;
+								}
+							}
+							for(j=grid/2;j<grid;j++){
+								if(sudoku[i][i]==sudoku[j][grid/2] || sudoku[i][l]==sudoku[j][grid/2]){
+									flag3=1;
+									break;
+								}	
+							}
+						}
+						else if(i<grid){
+							for(j=i+1;j<grid;j++){
+								if(sudoku[i][grid/2]==sudoku[j][grid/2]){
+									flag3=1;
+									break;
+								}
+							}	
+						}
+					}
+
+				}
+				if(flag3!=1){
+					printf("----------------Y %d-----------------\n",solution);
+					for(i=0;i<grid;i++){
+						for(j=0;j<grid;j++){
+							printf("%d ",sudoku[i][j]);
+						}
+					printf("\n");
+					}
+				}
+				flag3=0;
+
 			}
 			else if(nopts[move]>0){
 				sudoku[x[counter2]][y[counter2]] = option[move][nopts[move]];
