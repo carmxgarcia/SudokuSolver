@@ -5,7 +5,7 @@ int main(){
 	
 	int nPuzzles,subgrid,grid,sudoku[100][100];
 	int start, move;
-	int i,j,k,l,candidate,counter=0,counter2=0,flag=0,flag2=0,flag3=0,solution=0;
+	int i,j,k,l,candidate,counter=0,counter2=0,flag=0,flag2=0,flag3=0,solution=0,xSolution=0,ySolution=0,xySolution=0;
 
 	FILE * fp;
 	fp = fopen ("in.txt","r");
@@ -40,9 +40,6 @@ int main(){
 	}
 
 
-	for(j=0; j<counter; j++){
-		printf("(%d,%d)\n", x[j],y[j]);
-	}
 
 	int tmp = 0;
 
@@ -127,17 +124,19 @@ int main(){
 				}
 				
 				
-
+				/*check if there is X*/
 				for(i=0,l=grid-1;i<grid-1,l>0;i++,l--){
 					for(j=i+1,k=grid-1;j<grid,k>0;j++,k--){
 						if(sudoku[i][i]==sudoku[j][j] || sudoku[i][l]==sudoku[j][k-i-1]){
 							flag2=1;
 							break;
 						}
-					}					
+					}
+					if(flag2==1) break;					
 				}
 
 				if(flag2!=1){
+					/*if there is X, print*/
 					printf("----------------X %d-----------------\n",solution);
 					for(i=0;i<grid;i++){
 						for(j=0;j<grid;j++){
@@ -145,19 +144,23 @@ int main(){
 						}
 					printf("\n");
 					}
+					xSolution++;
 				}
-				flag2=0;
-
-				if(grid %2==0){
+				
+				/*if dimensions are even, no Y*/
+				if(grid%2==0){
 					flag3=1;
 				}
 				else{
+				/*checking for Y*/
 					for(i=0,l=grid-1;i<grid-1,l>0;i++,l--){
 						if(i<grid/2){
-							for(j=i+1,k=grid-1;j<grid/2,k>0;j++,k--){
+							for(j=i+1,k=grid-1;j<grid/2,k>grid/2;j++,k--){
+								if(j>=(grid/2)) break;
 								if(sudoku[i][i]==sudoku[j][j] || sudoku[i][l]==sudoku[j][k-i-1]){
 									flag3=1;
 									break;
+									
 								}
 							}
 							for(j=grid/2;j<grid;j++){
@@ -179,6 +182,7 @@ int main(){
 
 				}
 				if(flag3!=1){
+					/*if there is Y, print*/
 					printf("----------------Y %d-----------------\n",solution);
 					for(i=0;i<grid;i++){
 						for(j=0;j<grid;j++){
@@ -186,9 +190,25 @@ int main(){
 						}
 					printf("\n");
 					}
+					ySolution++;
 				}
-				flag3=0;
 
+				if(flag2==0 && flag3==0){
+					/*if there are both X and Y, print*/
+					printf("----------------X Y %d-----------------\n",solution);
+					for(i=0;i<grid;i++){
+						for(j=0;j<grid;j++){
+							printf("%d ",sudoku[i][j]);
+						}
+					printf("\n");
+					}
+					xySolution++;	
+				}
+				flag2=0;
+				flag3=0;
+				printf("X total= %d\n",xSolution);
+				printf("Y total= %d\n",ySolution);
+				printf("X Y total= %d\n",xySolution);
 			}
 			else if(nopts[move]>0){
 				sudoku[x[counter2]][y[counter2]] = option[move][nopts[move]];
@@ -196,7 +216,6 @@ int main(){
 			}
 			//printf("-----------%d\n",counter2);
 			sudoku[x[counter2]][y[counter2]]=0;
-
 
 		}
 
