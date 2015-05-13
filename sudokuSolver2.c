@@ -135,7 +135,7 @@ int main(){
 				sudoku[x[counter2]][y[counter2]] = option[move][nopts[move]];
 				counter2++;
 			}
-			//printf("-----------%d\n",counter2);
+			printf("-----------%d\n",counter2);
 			sudoku[x[counter2]][y[counter2]]=0;
 
 

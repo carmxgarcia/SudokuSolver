@@ -41,7 +41,7 @@
 
 	function solveSudoku(gridSize, grid) {
 		var move, start;
-		var counter = 0, counter2 = 0, tmp = 0, candidate, flag = 0, solution;
+		var counter = 0, counter2 = 0, tmp = 0, candidate, flag = 0, solution = 0;
 		var x=[], y=[];
 		var dim = (gridSize*gridSize)+2;
 		var nopts = new Array();
@@ -87,12 +87,15 @@
 						if(flag == 0){
 							for (var k = 0; k < subgrid; k++) {
 								for(var l = 0; l < subgrid; l++){
-									var a = (((x[counter2])/subgrid)*(subgrid))+k;
-									var b = (y[counter2]/subgrid)*(subgrid)+l;
+									var a = (Math.floor(((x[counter2])/subgrid))*(subgrid))+k;
+									var b = Math.floor((y[counter2]/subgrid))*(subgrid)+l;
+									
+									//console.log("X: "+x[counter2]+" k: "+k);
+									//console.log("Y: "+y[counter2]+" l: "+l);
 									console.log(a + " " +b+ " " + candidate + " " + grid[a][b]);
+									//console.log(grid);
 									if(grid[a][b] == candidate){
 										flag = 1;
-										console.log("BREAKKK");
 										break;
 									}
 								}
@@ -129,7 +132,9 @@
 					grid[x[counter2]][y[counter2]] = option[move][nopts[move]];
 					counter2++;
 				}
-				grid[x[counter2]][y[counter2]]=0;
+				//console.log(counter2);
+				if(counter2 >= 0)
+					grid[x[counter2]][y[counter2]]=0;
 			}
 		}
 	}
@@ -163,16 +168,17 @@
 		                	line++;
 		                	gridSize = subgrid * subgrid;
 		                	
-		                	grid[i] = new Array();
-		                	//console.log(grid[i]);
 		                	for (var j = 0; j < gridSize; j++) {
-		                		grid[i].push(tokens[line].replace(/\s+/g, ''));
+		                		grid[j] = new Array();
+		                		var num = tokens[line].split(" ");
+		                		console.log(num);
+		                		for(var k = 0; k < gridSize; k++)
+		                			grid[j].push(num[k]);
 		                		line++;
-		                	};
+		                	}
 	                	
-		                	console.log(grid[i]);
-		                	createTable(gridSize, grid[i]);
-		                	solveSudoku(gridSize, grid[i]);
+		                	createTable(gridSize, grid);
+		                	solveSudoku(gridSize, grid);
 		                }
 
 		                		                
