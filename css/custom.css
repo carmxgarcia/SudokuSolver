@@ -1,0 +1,27 @@
+@font-face {
+    font-family: SCFont;
+    src: url(../Shoguns_Clan.ttf);
+}
+
+.center-center{
+	padding-top: 5%;
+	margin-left: auto;
+  margin-right: auto;
+}
+
+.title{
+	font-size: 7em;
+	text-align: center;
+	font-family: SCFont;
+}
+
+.input{
+	width: 50px;
+	height: 50px;
+	font-size: 30px;
+	text-align: center;
+}
+
+.table{
+padding-bottom: 15px;
+}
