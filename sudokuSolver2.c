@@ -39,8 +39,6 @@ int main(){
 		}
 	}
 
-
-
 	int tmp = 0;
 
 	move = start = 0; 
@@ -60,6 +58,7 @@ int main(){
 
 				for(candidate=1;candidate<=grid;candidate++){
 					for(k=0;k<grid;k++){
+						//printf("------------>%d %d %d\n", counter2, x[counter2], sudoku[x[counter2]][k]);
 						if(sudoku[x[counter2]][k]==candidate){
 							flag=1;
 							break;
@@ -74,7 +73,7 @@ int main(){
 							for(l=0;l<subgrid;l++){
 								int a = (((x[counter2])/subgrid)*(subgrid))+k;
 								int b = (y[counter2]/subgrid)*(subgrid)+l;
-								printf("%d %d %d %d\n", a, b, candidate, sudoku[a][b]);
+								//printf("%d %d %d %d\n", a, b, candidate, sudoku[a][b]);
 								if(sudoku[a][b]==candidate){
 									flag=1;
 									break;
@@ -119,12 +118,12 @@ int main(){
 				solution++;
 
 				printf("----------------SOLUTION %d-----------------\n",solution);
-				for(i=0;i<grid;i++){
-					for(j=0;j<grid;j++){
-						printf("%d ",sudoku[i][j]);
-					}
-					printf("\n");
-				}
+				// for(i=0;i<grid;i++){
+				// 	for(j=0;j<grid;j++){
+				// 		printf("%d ",sudoku[i][j]);
+				// 	}
+				// 	printf("\n");
+				// }
 				
 				
 				/*check if there is X*/
@@ -141,12 +140,12 @@ int main(){
 				if(flag2!=1){
 					/*if there is X, print*/
 					printf("----------------X %d-----------------\n",solution);
-					for(i=0;i<grid;i++){
-						for(j=0;j<grid;j++){
-							printf("%d ",sudoku[i][j]);
-						}
-					printf("\n");
-					}
+					// for(i=0;i<grid;i++){
+					// 	for(j=0;j<grid;j++){
+					// 		printf("%d ",sudoku[i][j]);
+					// 	}
+					// printf("\n");
+					// }
 					xSolution++;
 				}
 				
@@ -187,12 +186,12 @@ int main(){
 				if(flag3!=1){
 					/*if there is Y, print*/
 					printf("----------------Y %d-----------------\n",solution);
-					for(i=0;i<grid;i++){
-						for(j=0;j<grid;j++){
-							printf("%d ",sudoku[i][j]);
-						}
-					printf("\n");
-					}
+					// for(i=0;i<grid;i++){
+					// 	for(j=0;j<grid;j++){
+					// 		printf("%d ",sudoku[i][j]);
+					// 	}
+					// printf("\n");
+					// }
 					ySolution++;
 				}
 
@@ -217,7 +216,7 @@ int main(){
 				sudoku[x[counter2]][y[counter2]] = option[move][nopts[move]];
 				counter2++;
 			}
-			printf("-----------%d\n",counter2);
+			//printf("-----------%d\n",counter2);
 			sudoku[x[counter2]][y[counter2]]=0;
 
 		}

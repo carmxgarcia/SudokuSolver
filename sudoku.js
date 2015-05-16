@@ -1,9 +1,10 @@
-function createTable(size, grid){
-	var body=document.getElementsByTagName('body')[0];
+function createPlayableTable(size, grid){
+	var divID=document.getElementById("playabletable");
 	var tbl=document.createElement('table');
 	var dim = size==9?50:25;
+	var height = size==9?75:80;
 	var btn = document.createElement("BUTTON");        // Create a <button> element
-	var t = document.createTextNode("SHOW SOLUTION");       // Create a text node
+	var t = document.createTextNode("SOLVE");       // Create a text node
 	btn.appendChild(t);                                // Append the text to <button>
 	tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
@@ -13,21 +14,68 @@ function createTable(size, grid){
 	    for(var j=0;j<size;j++){
 	        var td=document.createElement('td');
 	        tr.appendChild(td);
-	        td.setAttribute('height','50');
+	        td.setAttribute('height',height);
+	        td.setAttribute('align','center');
 	        //console.log(grid[i][j]);
 	        td.innerHTML = grid[i][j];
 	    }
 	    tbdy.appendChild(tr);
 	}
 	tbl.appendChild(tbdy);
-	body.appendChild(tbl);
-	body.appendChild(btn);                    // Append <button> to <body>
-	body.appendChild(document.createElement('br'));
+	tbl.setAttribute('align','center');
+	divID.appendChild(tbl);
+	divID.appendChild(btn);                    // Append <button> to <div> if playable
+	divID.appendChild(document.createElement('br'));
+	divID.appendChild(document.createElement('br'));
+	divID.appendChild(document.createElement('br'));
+}
+
+function createTable(size, grid, divID){
+	var divID=document.getElementById(divID);
+	var tbl=document.createElement('table');
+	var dim = 80;
+	var height = size==9?40:80;
+	tbl.style.width= dim+'%';
+	tbl.setAttribute('border','1');
+	var tbdy=document.createElement('tbody');
+	for(var i=0;i<size;i++){
+	    var tr=document.createElement('tr');
+	    for(var j=0;j<size;j++){
+	        var td=document.createElement('td');
+	        tr.appendChild(td);
+	        td.setAttribute('height',height);
+	        td.setAttribute('align','center');
+	        //console.log(grid[i][j]);
+	        td.innerHTML = grid[i][j];
+	    }
+	    tbdy.appendChild(tr);
+	}
+	tbl.appendChild(tbdy);
+	tbl.setAttribute('align','center');
+	divID.appendChild(tbl);
+	divID.appendChild(document.createElement('br'));
+	divID.appendChild(document.createElement('br'));
+	divID.appendChild(document.createElement('br'));
+}
+
+function showPossibleSolutions (x, y, xy) {
+	var xdiv=document.getElementById("xsudoku");
+	var ydiv=document.getElementById("ysudoku");
+	var xydiv=document.getElementById("xysudoku");
+
+	var xsol = document.createTextNode("X SOLUTIONS "+x);
+	var ysol = document.createTextNode("Y SOLUTIONS "+y);
+	var xysol = document.createTextNode("XY SOLUTIONS "+xy);
+
+	xdiv.insertBefore(xsol, xdiv.firstChild);
+	ydiv.insertBefore(ysol, ydiv.firstChild);
+	xydiv.insertBefore(xysol, xydiv.firstChild);
 }
 
 function solveSudoku(gridSize, grid) {
 	var move, start;
-	var counter = 0, counter2 = 0, tmp = 0, candidate, flag = 0, solution = 0;
+	var counter = 0, counter2 = 0, tmp = 0, candidate, flag = 0, solution = 0, flag2 = 0;
+	var flag3=0,solution=0,xSolution=0,ySolution=0,xySolution=0;
 	var x=[], y=[];
 	var dim = (gridSize*gridSize)+2;
 	var nopts = new Array();
@@ -45,6 +93,7 @@ function solveSudoku(gridSize, grid) {
 		}
 	}
 
+
 	move = start = 0;
 	nopts[start] = 1;
 
@@ -58,9 +107,10 @@ function solveSudoku(gridSize, grid) {
 			move++;
 			nopts[move] = 0;
 			tmp = 0;
-			if(move <= gridSize*gridSize){
+			if(move <= gridSize*gridSize && counter2 < counter){
 				for(candidate = 1; candidate <= gridSize; candidate++){
 					for(var k = 0; k < gridSize; k++){
+						//console.log("HELL: "+counter2);
 						if (grid[x[counter2]][k] == candidate){
 							flag = 1;
 							break;
@@ -92,7 +142,7 @@ function solveSudoku(gridSize, grid) {
 					flag=0;
 				}
 				if(nopts[move] > 0){
-					grid[x[counter2]][y[counter2]]=option[move][nopts[move]];
+					grid[x[counter2]][y[counter2]]=option[move][nopts[move]].toString();
 					counter2++;
 				}
 			}
@@ -105,21 +155,99 @@ function solveSudoku(gridSize, grid) {
 				console.log("Move: "+counter);
 				solution++;
 				console.log("Solution: "+solution);
-				for (var i = 0; i < gridSize; i++){
-					for(var j = 0; j < gridSize; j++){
-						console.log(grid[i][j]);
+				for (i=0; i<gridSize; i++)
+				//	for(j=0; j<gridSize; j++)
+				console.log(grid[i]);
+
+				/*CHECK for X*/
+				var i, j, k, l;
+				for(i=0, l=gridSize-1;i<gridSize-1 && l>0;i++,l--){
+					for(j=i+1, k=gridSize-1;j<gridSize && k>0;j++,k--){
+						//console.log(i+" "+j+" "+k+" "+l)
+						if(grid[i][i]==grid[j][j] || grid[i][l]==grid[j][k-i-1]){
+							flag2=1;
+							break;
+						}
+					}
+					if(flag2==1) break;					
+				}
+
+				if(flag2!=1){
+					/*if there is X, print*/
+					console.log("X "+solution);
+					for (i=0; i<gridSize; i++)
+					//	for(j=0; j<gridSize; j++)
+					console.log(grid[i]);
+					createTable(gridSize, grid, "xsudoku");
+					xSolution++;
+				}
+
+				/*if dimensions are even, no Y*/
+				if(grid%2==0){
+					flag3=1;
+				}
+				else{
+				/*CHECK Y*/
+					var half = Math.floor(gridSize/2);
+					for(i=0, l=gridSize-1;i<gridSize-1 && l>0;i++,l--){
+						if(i<half){
+							for(j=i+1, k=gridSize-1;j<half && k>half;j++,k--){
+								if(j>=half) break;
+								if(grid[i][i]==grid[j][j] || grid[i][l]==grid[j][k-i-1]){
+									flag3=1;
+									break;
+								}
+							}
+							for(j=half;j<gridSize;j++){
+								if(grid[i][i]==grid[j][half] || grid[i][l]==grid[j][half]){
+									flag3=1;
+									break;
+								}	
+							}
+						}
+						else if(i<gridSize){
+							for(j=i+1;j<gridSize;j++){
+								if(grid[i][half]==grid[j][half]){
+									flag3=1;
+									break;
+								}
+							}	
+						}
 					}
 				}
+				if(flag3!=1){
+					/*if there is Y, print*/
+					console.log("Y "+solution);
+					for (i=0; i<gridSize; i++)
+					//	for(j=0; j<gridSize; j++)
+					console.log(grid[i]);
+					createTable(gridSize, grid, "ysudoku");
+					ySolution++;
+				}
+				if(flag2==0 && flag3==0){
+					/*if there are both X and Y, print*/
+					console.log("XY "+solution);
+					for (i=0; i<gridSize; i++)
+					console.log(grid[i]);
+					createTable(gridSize, grid, "xysudoku");
+					xySolution++;
+				}
+				flag2=0;
+				flag3=0;
 			}
 			else if(nopts[move] > 0){
-				grid[x[counter2]][y[counter2]] = option[move][nopts[move]];
+				grid[x[counter2]][y[counter2]] = option[move][nopts[move]].toString();
 				counter2++;
 			}
-			//console.log(counter2);
 			if(counter2 >= 0)
-				grid[x[counter2]][y[counter2]]=0;
+				grid[x[counter2]][y[counter2]]="0";
 		}
 	}
+	console.log("REGULAR: "+solution);
+	console.log("X:       "+xSolution);
+	console.log("Y:       "+ySolution);
+	console.log("XY:      "+xySolution);
+	showPossibleSolutions(xSolution, ySolution, xySolution);
 }
 
 window.onload = function () { 
@@ -154,14 +282,14 @@ window.onload = function () {
 	                	for (var j = 0; j < gridSize; j++) {
 	                		grid[j] = new Array();
 	                		var num = tokens[line].split(" ");
-	                		console.log(num);
-	                		for(var k = 0; k < gridSize; k++)
+	                		for(var k = 0; k < gridSize; k++){
 	                			grid[j].push(num[k]);
+	                		}
 	                		line++;
 	                	}
                 	
-	                	createTable(gridSize, grid);
-	                	solveSudoku(gridSize, grid);
+	                	createPlayableTable(gridSize, grid);
+	                	//solveSudoku(gridSize, grid);
 	                }
 
 	                		                

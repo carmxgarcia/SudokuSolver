@@ -1,14 +1,38 @@
 <html>
-    <input type="file" id="txtfiletoread" />
+	<head>
+		<!-- REMOVE/MODIFY UI, THIS IS JUST FOR TESTING PURPOSES ONLY -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<title>
+			Sudoku Solver
+		</title>
+	</head>
+	<body>
+		<div id = "readfile"  style="background-color:lavender;" class="col-lg-12">
+			<br>
+			<input type="file" id="txtfiletoread" />
+			<br>
+		</div>
 
-    <p>
-    	Contents of file:
-    </p>
-    <div id="filecontents">
-    </div>
+		<div id = "filecontents" style="background-color:lightblue;" class="col-lg-12">
+			<br><br><br><br><br>
+		</div>
 
-    <body>
-    </body>
+		<div id = "playabletable" style="background-color:lightpink;" class="col-lg-12">
+		</div>
 
+		<div id = "solutions" class="row" class="col-lg-10">
+			<div id = "xsudoku" class="col-lg-4" style="background-color:seashell;">
+				<br><br><br><br><br>
+			</div>
+
+			<div id = "ysudoku" class="col-lg-4" style="background-color:palegreen;">
+				<br><br><br><br><br>
+			</div>
+
+			<div id = "xysudoku" class="col-lg-4" style="background-color:lightcyan;">
+				<br><br><br><br><br>
+			</div>
+		</div>
+	</body>
 	<script src="sudoku.js"></script>
 </html>
