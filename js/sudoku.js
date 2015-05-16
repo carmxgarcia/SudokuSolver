@@ -17,7 +17,20 @@ function createPlayableTable(size, grid){
 	        td.setAttribute('height',height);
 	        td.setAttribute('align','center');
 	        //console.log(grid[i][j]);
-	        td.innerHTML = grid[i][j];
+	        if(grid[i][j] == "0"){
+	        	var ce = document.createElement('div');
+	        	ce.setAttribute('contenteditable', true);
+	        	ce.setAttribute('id', i);
+	        	td.appendChild(ce);
+	        }
+	        else{
+	        	var ce = document.createElement('div');
+	        	ce.innerHTML = grid[i][j];
+	        	ce.setAttribute('contenteditable', false);
+	        	ce.setAttribute('id', i);
+	        	td.appendChild(ce);	        	
+	        }
+	        	
 	    }
 	    tbdy.appendChild(tr);
 	}
