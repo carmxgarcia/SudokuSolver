@@ -1,11 +1,20 @@
+function checkTable () {
+	alert("hello");
+}
+
+function checkUserInput () {
+	console.log("checkUserInput");
+}
+
 function createPlayableTable(size, grid){
 	var divID=document.getElementById("playabletable");
 	var tbl=document.createElement('table');
 	var dim = size==9?50:25;
 	var height = size==9?75:80;
 	var btn = document.createElement("BUTTON");        // Create a <button> element
-	var t = document.createTextNode("SOLVE");       // Create a text node
+	var t = document.createTextNode("CHECK");       // Create a text node
 	btn.appendChild(t);                                // Append the text to <button>
+	btn.setAttribute('id','check_btn');
 	tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
 	var tbdy=document.createElement('tbody');
@@ -16,22 +25,26 @@ function createPlayableTable(size, grid){
 	        tr.appendChild(td);
 	        td.setAttribute('height',height);
 	        td.setAttribute('align','center');
-	        //console.log(grid[i][j]);
+			var cellID = "cell_"+i+j;
 	        if(grid[i][j] == "0"){
-	        	var ce = document.createElement('div');
-	        	ce.setAttribute('contenteditable', true);
-	        	ce.setAttribute('id', i);
+	        	var ce = document.createElement('input');
+	        	ce.maxLength = "1";
+	        	//ce.setAttribute('contenteditable', true);
+	        	ce.setAttribute('name', cellID);
 	        	td.appendChild(ce);
+
+	        	console.log(cellID);
+	        	lol = document.getElementById(cellID);
+	        	console.log(lol);
 	        }
 	        else{
-	        	console.log(grid[i][j]+" :not zero?");
+	        	//console.log(grid[i][j]+" :not zero?");
 	        	var ce = document.createElement('div');
 	        	ce.innerHTML = grid[i][j];
-	        	ce.setAttribute('contenteditable', false);
-	        	ce.setAttribute('id', i);
+	        	//ce.setAttribute('contenteditable', false);
+	        	//ce.setAttribute('id', cellID);
 	        	td.appendChild(ce);	        	
 	        }
-	        	
 	    }
 	    tbdy.appendChild(tr);
 	}
@@ -39,6 +52,8 @@ function createPlayableTable(size, grid){
 	tbl.setAttribute('align','center');
 	divID.appendChild(tbl);
 	divID.appendChild(btn);                    // Append <button> to <div> if playable
+
+	document.getElementById("check_btn").onclick = checkTable;
 	divID.appendChild(document.createElement('br'));
 	divID.appendChild(document.createElement('br'));
 	divID.appendChild(document.createElement('br'));
@@ -48,7 +63,7 @@ function createTable(size, grid, divID){
 	var divID=document.getElementById(divID);
 	var tbl=document.createElement('table');
 	var dim = 80;
-	var height = size==9?40:80;
+	var height = size==9?40:60;
 	tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
 	var tbdy=document.createElement('tbody');
@@ -72,15 +87,18 @@ function createTable(size, grid, divID){
 	divID.appendChild(document.createElement('br'));
 }
 
-function showPossibleSolutions (x, y, xy) {
+function showPossibleSolutions (r, x, y, xy) {
+	var regdiv=document.getElementById("regular");
 	var xdiv=document.getElementById("xsudoku");
 	var ydiv=document.getElementById("ysudoku");
 	var xydiv=document.getElementById("xysudoku");
 
+	var regsol = document.createTextNode("X SOLUTIONS "+r);
 	var xsol = document.createTextNode("X SOLUTIONS "+x);
 	var ysol = document.createTextNode("Y SOLUTIONS "+y);
 	var xysol = document.createTextNode("XY SOLUTIONS "+xy);
 
+	regdiv.insertBefore(regsol, regdiv.firstChild);
 	xdiv.insertBefore(xsol, xdiv.firstChild);
 	ydiv.insertBefore(ysol, ydiv.firstChild);
 	xydiv.insertBefore(xysol, xydiv.firstChild);
@@ -166,12 +184,12 @@ function solveSudoku(gridSize, grid) {
 			nopts[move]--;
 			counter2--;
 			if (move == counter){
-				console.log("Move: "+counter);
+				createTable(gridSize, grid, "regular");
 				solution++;
-				console.log("Solution: "+solution);
-				for (i=0; i<gridSize; i++)
-				//	for(j=0; j<gridSize; j++)
-				console.log(grid[i]);
+				//console.log("Move: "+counter);
+				//console.log("Solution: "+solution);
+				//for (i=0; i<gridSize; i++)
+				//console.log(grid[i]);
 
 				/*CHECK for X*/
 				var i, j, k, l;
@@ -188,10 +206,9 @@ function solveSudoku(gridSize, grid) {
 
 				if(flag2!=1){
 					/*if there is X, print*/
-					console.log("X "+solution);
-					for (i=0; i<gridSize; i++)
-					//	for(j=0; j<gridSize; j++)
-					console.log(grid[i]);
+					// console.log("X "+solution);
+					// for (i=0; i<gridSize; i++)
+					// console.log(grid[i]);
 					createTable(gridSize, grid, "xsudoku");
 					xSolution++;
 				}
@@ -231,18 +248,17 @@ function solveSudoku(gridSize, grid) {
 				}
 				if(flag3!=1){
 					/*if there is Y, print*/
-					console.log("Y "+solution);
-					for (i=0; i<gridSize; i++)
-					//	for(j=0; j<gridSize; j++)
-					console.log(grid[i]);
+					// console.log("Y "+solution);
+					// for (i=0; i<gridSize; i++)
+					// console.log(grid[i]);
 					createTable(gridSize, grid, "ysudoku");
 					ySolution++;
 				}
 				if(flag2==0 && flag3==0){
 					/*if there are both X and Y, print*/
-					console.log("XY "+solution);
-					for (i=0; i<gridSize; i++)
-					console.log(grid[i]);
+					// console.log("XY "+solution);
+					// for (i=0; i<gridSize; i++)
+					// console.log(grid[i]);
 					createTable(gridSize, grid, "xysudoku");
 					xySolution++;
 				}
@@ -261,7 +277,7 @@ function solveSudoku(gridSize, grid) {
 	console.log("X:       "+xSolution);
 	console.log("Y:       "+ySolution);
 	console.log("XY:      "+xySolution);
-	showPossibleSolutions(xSolution, ySolution, xySolution);
+	showPossibleSolutions(solution, xSolution, ySolution, xySolution);
 }
 
 window.onload = function () { 
@@ -305,7 +321,7 @@ window.onload = function () {
 	                	}
                 	
 	                	createPlayableTable(gridSize, grid);
-	                	//solveSudoku(gridSize, grid);
+	                	solveSudoku(gridSize, grid);
 	                }
 
 	                		                
