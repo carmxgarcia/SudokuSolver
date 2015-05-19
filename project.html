@@ -1,19 +1,30 @@
 <html>
 	<head>
 		<!-- REMOVE/MODIFY UI, THIS IS JUST FOR TESTING PURPOSES ONLY -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./css/bootstrap.min.css">
+		<link href="css/roboto.min.css" rel="stylesheet">
+    <link href="css/material.min.css" rel="stylesheet">
+    <link href="css/ripples.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
 		<title>
 			Sudoku Solver
 		</title>
 	</head>
 	<body>
+
+
+	<center>
+
+  <div id="main" class="center-center">
+	  <div class="title"> SUDOKU SOLVER </div>
+
 		<div id = "readfile"  style="background-color:lavender;" class="col-lg-12">
-			<br>
-			<input type="file" id="txtfiletoread" />
-			<br>
+			<span class="btn btn-primary btn-file">
+				Browse <input type="file" id="txtfiletoread">
+			</span>
 		</div>
 
-		<div id = "filecontents" style="background-color:lightblue;" class="col-lg-12">
+		<div id = "filecontents" style="background-color:lightblue; display:none;" class="col-lg-12">
 			<br><br><br><br><br>
 		</div>
 
@@ -37,6 +48,9 @@
 				<br><br><br><br><br>
 			</div>
 		</div>
+
+		</div>
+	</center>
 	</body>
 	<script src="js/sudoku.js"></script>
 </html>
