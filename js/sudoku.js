@@ -11,6 +11,7 @@ function createPlayableTable(size, grid){
 	var tbdy=document.createElement('tbody');
 	for(var i=0;i<size;i++){
 	    var tr=document.createElement('tr');
+	   	console.log(grid[i]);
 	    for(var j=0;j<size;j++){
 	        var td=document.createElement('td');
 	        tr.appendChild(td);
@@ -24,6 +25,7 @@ function createPlayableTable(size, grid){
 	        	td.appendChild(ce);
 	        }
 	        else{
+	        	console.log(grid[i][j]+" :not zero?");
 	        	var ce = document.createElement('div');
 	        	ce.innerHTML = grid[i][j];
 	        	ce.setAttribute('contenteditable', false);
@@ -294,7 +296,9 @@ window.onload = function () {
 	                	
 	                	for (var j = 0; j < gridSize; j++) {
 	                		grid[j] = new Array();
-	                		var num = tokens[line].split(" ");
+	                		tokens[line] = tokens[line].replace(/\s/g, "") 
+	                		var num = tokens[line].split("");
+	                		console.log(num);
 	                		for(var k = 0; k < gridSize; k++){
 	                			grid[j].push(num[k]);
 	                		}
