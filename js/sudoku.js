@@ -63,9 +63,13 @@ function createTable(size, grid, divID){
 	var divID=document.getElementById(divID);
 	var tbl=document.createElement('table');
 	var dim = 80;
-	var height = size==9?40:60;
+	var height = size==9?30:60;
+	var flagx = 1;
+	var flagy = 0;
+	var subgrid = Math.sqrt(size);
 	tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
+	//tbl.setAttribute('class', 'table table-striped table-hover');
 	var tbdy=document.createElement('tbody');
 	for(var i=0;i<size;i++){
 	    var tr=document.createElement('tr');
@@ -74,6 +78,21 @@ function createTable(size, grid, divID){
 	        tr.appendChild(td);
 	        td.setAttribute('height',height);
 	        td.setAttribute('align','center');
+
+	        if(size == 4){
+		      	if ((j < subgrid && i < subgrid) || (i >= subgrid && j >= subgrid))
+		        	td.setAttribute('bgcolor', '#4db6ac');
+		        else
+					td.setAttribute('bgcolor', '#b2dfdb');	        	
+	        }
+
+	        if(size == 9){
+		      	if ((j < subgrid && i < subgrid) || (i < subgrid && j >= 2*subgrid) || (i >= 2*subgrid && j >= 2*subgrid) || (i >= 2*subgrid && j < subgrid) || (i < 2*subgrid && i >= subgrid && j < 2*subgrid && j >= subgrid))
+		        	td.setAttribute('bgcolor', '#4db6ac');
+		        else
+					td.setAttribute('bgcolor', '#b2dfdb');	        	
+	        }
+
 	        //console.log(grid[i][j]);
 	        td.innerHTML = grid[i][j];
 	    }
@@ -93,7 +112,7 @@ function showPossibleSolutions (r, x, y, xy) {
 	var ydiv=document.getElementById("ysudoku");
 	var xydiv=document.getElementById("xysudoku");
 
-	var regsol = document.createTextNode("X SOLUTIONS "+r);
+	var regsol = document.createTextNode("REGULAR SOLUTIONS "+r);
 	var xsol = document.createTextNode("X SOLUTIONS "+x);
 	var ysol = document.createTextNode("Y SOLUTIONS "+y);
 	var xysol = document.createTextNode("XY SOLUTIONS "+xy);
