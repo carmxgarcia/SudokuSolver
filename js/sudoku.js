@@ -11,7 +11,6 @@ function createPlayableTable(size, grid){
 	var tbdy=document.createElement('tbody');
 	for(var i=0;i<size;i++){
 	    var tr=document.createElement('tr');
-	   	console.log(grid[i]);
 	    for(var j=0;j<size;j++){
 	        var td=document.createElement('td');
 	        tr.appendChild(td);
