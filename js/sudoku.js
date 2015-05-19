@@ -21,6 +21,7 @@ function createPlayableTable(size, grid){
 	        	var ce = document.createElement('div');
 	        	ce.setAttribute('contenteditable', true);
 	        	ce.setAttribute('id', i);
+	        	ce.className = "input";
 	        	td.appendChild(ce);
 	        }
 	        else{
@@ -29,6 +30,7 @@ function createPlayableTable(size, grid){
 	        	ce.innerHTML = grid[i][j];
 	        	ce.setAttribute('contenteditable', false);
 	        	ce.setAttribute('id', i);
+	        	ce.className = "input";
 	        	td.appendChild(ce);	        	
 	        }
 	        	
@@ -305,7 +307,7 @@ window.onload = function () {
 	                	}
                 	
 	                	createPlayableTable(gridSize, grid);
-	                	//solveSudoku(gridSize, grid);
+	                	solveSudoku(gridSize, grid);
 	                }
 
 	                		                
