@@ -9,8 +9,7 @@ function checkUserInput () {
 function createPlayableTable(size, grid){
 	var divID=document.getElementById("playabletable");
 	var tbl=document.createElement('table');
-	var dim = size==9?50:25;
-	var height = size==9?75:80;
+	var height = 50;
 	var subgrid = Math.sqrt(size);
 	var btn = document.createElement("BUTTON");        // Create a <button> element
 	var t = document.createTextNode("CHECK");       // Create a text node
@@ -22,7 +21,7 @@ function createPlayableTable(size, grid){
 	solve.appendChild(u);                                // Append the text to <button>
 	solve.setAttribute('id','show_sol');
 
-	tbl.style.width= dim+'%';
+	//tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
 	var tbdy=document.createElement('tbody');
 	for(var i=0;i<size;i++){
@@ -30,6 +29,7 @@ function createPlayableTable(size, grid){
 	    for(var j=0;j<size;j++){
 	        var td=document.createElement('td');
 	        tr.appendChild(td);
+	        td.setAttribute('width',height);
 	        td.setAttribute('height',height);
 	        td.setAttribute('align','center');
 
@@ -49,11 +49,15 @@ function createPlayableTable(size, grid){
 
 			var cellID = "cell_"+i+j;
 	        if(grid[i][j] == "0"){
-	        	var ce = document.createElement('div');
-	        	//ce.maxLength = "1";
-	        	ce.setAttribute('contenteditable', true);
-	        	ce.setAttribute('id', cellID);
-	        	td.appendChild(ce);
+	        	var inputDiv = document.createElement('div');
+	        	//inputDiv.setAttribute('class', 'form-group');
+	        	var editable = document.createElement('input');
+	        	editable.maxLength = "1";
+	        	editable.setAttribute('class', 'form-control col-lg');
+	        	editable.setAttribute('id', cellID);
+
+	        	inputDiv.appendChild(editable);
+	        	td.appendChild(inputDiv);
 
 	        	console.log(cellID);
 	        	lol = document.getElementById(cellID);
