@@ -11,10 +11,17 @@ function createPlayableTable(size, grid){
 	var tbl=document.createElement('table');
 	var dim = size==9?50:25;
 	var height = size==9?75:80;
+	var subgrid = Math.sqrt(size);
 	var btn = document.createElement("BUTTON");        // Create a <button> element
 	var t = document.createTextNode("CHECK");       // Create a text node
 	btn.appendChild(t);                                // Append the text to <button>
 	btn.setAttribute('id','check_btn');
+
+	var solve = document.createElement("BUTTON");
+	var u = document.createTextNode("SHOW SOLUTIONS");
+	solve.appendChild(u);                                // Append the text to <button>
+	solve.setAttribute('id','show_sol');
+
 	tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
 	var tbdy=document.createElement('tbody');
@@ -25,12 +32,27 @@ function createPlayableTable(size, grid){
 	        tr.appendChild(td);
 	        td.setAttribute('height',height);
 	        td.setAttribute('align','center');
+
+	        if(size == 4){
+		      	if ((j < subgrid && i < subgrid) || (i >= subgrid && j >= subgrid))
+		        	td.setAttribute('bgcolor', '#4db6ac');
+		        else
+					td.setAttribute('bgcolor', '#b2dfdb');	        	
+	        }
+
+	        if(size == 9){
+		      	if ((j < subgrid && i < subgrid) || (i < subgrid && j >= 2*subgrid) || (i >= 2*subgrid && j >= 2*subgrid) || (i >= 2*subgrid && j < subgrid) || (i < 2*subgrid && i >= subgrid && j < 2*subgrid && j >= subgrid))
+		        	td.setAttribute('bgcolor', '#4db6ac');
+		        else
+					td.setAttribute('bgcolor', '#b2dfdb');	        	
+	        }
+
 			var cellID = "cell_"+i+j;
 	        if(grid[i][j] == "0"){
-	        	var ce = document.createElement('input');
-	        	ce.maxLength = "1";
-	        	//ce.setAttribute('contenteditable', true);
-	        	ce.setAttribute('name', cellID);
+	        	var ce = document.createElement('div');
+	        	//ce.maxLength = "1";
+	        	ce.setAttribute('contenteditable', true);
+	        	ce.setAttribute('id', cellID);
 	        	td.appendChild(ce);
 
 	        	console.log(cellID);
@@ -52,20 +74,23 @@ function createPlayableTable(size, grid){
 	tbl.setAttribute('align','center');
 	divID.appendChild(tbl);
 	divID.appendChild(btn);                    // Append <button> to <div> if playable
+	divID.appendChild(solve);
 
+	divID.appendChild(document.createElement('br'));
 	document.getElementById("check_btn").onclick = checkTable;
+	document.getElementById("show_sol").onclick = function () {
+		solveSudoku(size, grid);
+	};
 	divID.appendChild(document.createElement('br'));
 	divID.appendChild(document.createElement('br'));
 	divID.appendChild(document.createElement('br'));
 }
 
-function createTable(size, grid, divID){
-	var divID=document.getElementById(divID);
+function createTable(size, grid, div){
+	var divID=document.getElementById(div);
 	var tbl=document.createElement('table');
 	var dim = 80;
 	var height = size==9?30:60;
-	var flagx = 1;
-	var flagy = 0;
 	var subgrid = Math.sqrt(size);
 	tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
@@ -91,6 +116,27 @@ function createTable(size, grid, divID){
 		        	td.setAttribute('bgcolor', '#4db6ac');
 		        else
 					td.setAttribute('bgcolor', '#b2dfdb');	        	
+	        }
+
+	        if(div == "xsudoku"){
+		      	if (i == j || i+j == size-1)
+		        	td.setAttribute('bgcolor', '#009688'); 
+	        }
+
+	        if(div == "ysudoku"){
+		      	if ((i == j || i+j == size-1) && i < size/2)
+		        	td.setAttribute('bgcolor', '#009688'); 
+		        if (j == Math.floor(size/2) && i > size/2)
+		        	td.setAttribute('bgcolor', '#009688'); 
+	        }
+
+	        if(div == "xysudoku"){
+	        	if (i == j || i+j == size-1)
+		        	td.setAttribute('bgcolor', '#009688'); 
+		      	if ((i == j || i+j == size-1) && i < size/2)
+		        	td.setAttribute('bgcolor', '#009688'); 
+		        if (j == Math.floor(size/2) && i > size/2)
+		        	td.setAttribute('bgcolor', '#009688'); 
 	        }
 
 	        //console.log(grid[i][j]);
@@ -315,15 +361,24 @@ window.onload = function () {
 	            var fileReader = new FileReader(); 
 	            fileReader.onload = function (e) { 
 	                var fileContents = document.getElementById('filecontents'); 
-	                fileContents.innerText = fileReader.result; 
+	               // fileContents.innerText = fileReader.result; 
 	                contents = fileReader.result;
+
+					var btn = document.createElement("BUTTON");        // Create a <button> element
+					var t = document.createTextNode("NEXT");       // Create a text node
+					btn.appendChild(t);                                // Append the text to <button>
+					btn.setAttribute('id','next_btn');
+					//fileContents.appendChild(btn);
 
 	                tokens = contents.split('\n');
 	                var nPuzzles = tokens[0];
 	                var subgrid, gridSize, line = 1;
 	                var grid = new Array();
+	                var i= 0;
 
-	                for (var i = 0; i < nPuzzles; i++) {
+	                //for (var i = 0; i < nPuzzles; i++) {
+	                while(i < nPuzzles){
+
 	                	subgrid = tokens[line];
 	                	line++;
 	                	gridSize = subgrid * subgrid;
@@ -340,7 +395,9 @@ window.onload = function () {
 	                	}
                 	
 	                	createPlayableTable(gridSize, grid);
-	                	solveSudoku(gridSize, grid);
+	                	//document.getElementById("next_btn").onclick = function () {
+	                		i++;
+	                	//};
 	                }
 
 	                		                
