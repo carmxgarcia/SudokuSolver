@@ -342,9 +342,21 @@ function pageInit() {
 }
 
 function processPuzzles(gridArray, nPuzzles) {
-	for (var i = 0; i < nPuzzles; i++) {
+	if (gridArray.length > 1)
+		document.getElementById('next_btn').style.visibility = '';
+
+	var i= 0;
+	createPlayableTable(gridArray[i].length, gridArray[i]);
+	i++;
+	document.getElementById("next_btn").onclick = function (){
+		pageInit();
 		createPlayableTable(gridArray[i].length, gridArray[i]);
-	}
+		i++;
+
+		if (i == gridArray.length)
+			document.getElementById('next_btn').setAttribute("disabled", "disabled");
+	};
+
 }
 
 window.onload = function () { 
@@ -367,10 +379,10 @@ window.onload = function () {
 	                contents = fileReader.result;
 
 	                pageInit();
-					var btn = document.createElement("BUTTON");        // Create a <button> element
-					var t = document.createTextNode("NEXT");       // Create a text node
-					btn.appendChild(t);                                // Append the text to <button>
-					btn.setAttribute('id','next_btn');
+					// var btn = document.createElement("BUTTON");        // Create a <button> element
+					// var t = document.createTextNode("NEXT");       // Create a text node
+					// btn.appendChild(t);                                // Append the text to <button>
+					// btn.setAttribute('id','next_btn');
 					// fileContents.appendChild(btn);
 
 	                tokens = contents.split('\n');
@@ -415,12 +427,10 @@ window.onload = function () {
 
 
 function loadBlur(){
-	
 	document.getElementById('main').setAttribute("class", "blur");
-
-  if(document.getElementById('loadingDiv').style.display == 'none'){
-    document.getElementById('loadingDiv').style.display = 'block';
-  }else{
-    document.getElementById('loadingDiv').style.display = 'none';
-  }
+	if(document.getElementById('loadingDiv').style.display == 'none'){
+		document.getElementById('loadingDiv').style.display = 'block';
+	}else{
+		document.getElementById('loadingDiv').style.display = 'none';
+	}
 }
