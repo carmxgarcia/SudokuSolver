@@ -83,6 +83,17 @@ function createPlayableTable(size, grid){
 	divID.appendChild(document.createElement('br'));
 	document.getElementById("check_btn").onclick = checkTable;
 	document.getElementById("show_sol").onclick = function () {
+
+	var regdiv=document.getElementById("regular");
+	var xdiv=document.getElementById("xsudoku");
+	var ydiv=document.getElementById("ysudoku");
+	var xydiv=document.getElementById("xysudoku");
+
+	regdiv.innerHTML = "";
+	xdiv.innerHTML = "";
+	ydiv.innerHTML = "";
+	xydiv.innerHTML = "";
+
 		solveSudoku(size, grid);
 	};
 	divID.appendChild(document.createElement('br'));
