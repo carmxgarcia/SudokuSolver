@@ -94,7 +94,9 @@ function createPlayableTable(size, grid){
 	ydiv.innerHTML = "";
 	xydiv.innerHTML = "";
 
-		solveSudoku(size, grid);
+	loadBlur();
+
+	solveSudoku(size, grid);
 	};
 	divID.appendChild(document.createElement('br'));
 	divID.appendChild(document.createElement('br'));
@@ -429,3 +431,15 @@ window.onload = function () {
 	    alert("Files are not supported"); 
 	}
 } 
+
+
+function loadBlur(){
+	
+	document.getElementById('main').setAttribute("class", "blur");
+
+  if(document.getElementById('loadingDiv').style.display == 'none'){
+    document.getElementById('loadingDiv').style.display = 'block';
+  }else{
+    document.getElementById('loadingDiv').style.display = 'none';
+  }
+}
