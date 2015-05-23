@@ -95,13 +95,34 @@ function createPlayableTable(size, grid){
 	xydiv.innerHTML = "";
 
 	loadBlur();
-
 	solveSudoku(size, grid);
+	unBlur();
+	
 	};
 	divID.appendChild(document.createElement('br'));
 	divID.appendChild(document.createElement('br'));
 	divID.appendChild(document.createElement('br'));
 }
+
+
+
+
+function loadBlur(){
+	
+	document.getElementById('main').setAttribute("class", "blur");
+
+  // if(document.getElementById('loadingDiv').style.display == 'none'){
+  //   document.getElementById('loadingDiv').style.display = 'block';
+  // }else{
+  //   document.getElementById('loadingDiv').style.display = 'none';
+  // }
+
+}
+
+function unBlur(){
+	document.getElementById('main').setAttribute("class", "center-center");
+}
+
 
 function createTable(size, grid, div){
 	var divID=document.getElementById(div);
@@ -432,14 +453,3 @@ window.onload = function () {
 	}
 } 
 
-
-function loadBlur(){
-	
-	document.getElementById('main').setAttribute("class", "blur");
-
-  if(document.getElementById('loadingDiv').style.display == 'none'){
-    document.getElementById('loadingDiv').style.display = 'block';
-  }else{
-    document.getElementById('loadingDiv').style.display = 'none';
-  }
-}
