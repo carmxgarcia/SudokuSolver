@@ -59,12 +59,11 @@ function createPlayableTable(size, grid){
 	        	inputDiv.appendChild(editable);
 	        	td.appendChild(inputDiv);
 
-	        	console.log(cellID);
-	        	lol = document.getElementById(cellID);
-	        	console.log(lol);
+	        	//console.log(cellID);
+	        	//lol = document.getElementById(cellID);
+	        	//console.log(lol);
 	        }
 	        else{
-	        	//console.log(grid[i][j]+" :not zero?");
 	        	var ce = document.createElement('div');
 	        	ce.innerHTML = grid[i][j];
 	        	//ce.setAttribute('contenteditable', false);
@@ -83,17 +82,10 @@ function createPlayableTable(size, grid){
 	divID.appendChild(document.createElement('br'));
 	document.getElementById("check_btn").onclick = checkTable;
 	document.getElementById("show_sol").onclick = function () {
-
-	var regdiv=document.getElementById("regular");
-	var xdiv=document.getElementById("xsudoku");
-	var ydiv=document.getElementById("ysudoku");
-	var xydiv=document.getElementById("xysudoku");
-
-	regdiv.innerHTML = "";
-	xdiv.innerHTML = "";
-	ydiv.innerHTML = "";
-	xydiv.innerHTML = "";
-
+		document.getElementById("regular").innerHTML = "";
+		document.getElementById("xsudoku").innerHTML = "";
+		document.getElementById("ysudoku").innerHTML = "";
+		document.getElementById("xysudoku").innerHTML = "";
 		solveSudoku(size, grid);
 	};
 	divID.appendChild(document.createElement('br'));
@@ -154,7 +146,6 @@ function createTable(size, grid, div){
 		        	td.setAttribute('bgcolor', '#009688'); 
 	        }
 
-	        //console.log(grid[i][j]);
 	        td.innerHTML = grid[i][j];
 	    }
 	    tbdy.appendChild(tr);
@@ -222,7 +213,6 @@ function solveSudoku(gridSize, grid) {
 			if(move <= gridSize*gridSize && counter2 < counter){
 				for(candidate = 1; candidate <= gridSize; candidate++){
 					for(var k = 0; k < gridSize; k++){
-						//console.log("HELL: "+counter2);
 						if (grid[x[counter2]][k] == candidate){
 							flag = 1;
 							break;
@@ -238,7 +228,6 @@ function solveSudoku(gridSize, grid) {
 								var a = (Math.floor(((x[counter2])/subgrid))*(subgrid))+k;
 								var b = Math.floor((y[counter2]/subgrid))*(subgrid)+l;
 								
-								//console.log(grid);
 								if(grid[a][b] == candidate){
 									flag = 1;
 									break;
@@ -266,16 +255,11 @@ function solveSudoku(gridSize, grid) {
 			if (move == counter){
 				createTable(gridSize, grid, "regular");
 				solution++;
-				//console.log("Move: "+counter);
-				//console.log("Solution: "+solution);
-				//for (i=0; i<gridSize; i++)
-				//console.log(grid[i]);
 
 				/*CHECK for X*/
 				var i, j, k, l;
 				for(i=0, l=gridSize-1;i<gridSize-1 && l>0;i++,l--){
 					for(j=i+1, k=gridSize-1;j<gridSize && k>0;j++,k--){
-						//console.log(i+" "+j+" "+k+" "+l)
 						if(grid[i][i]==grid[j][j] || grid[i][l]==grid[j][k-i-1]){
 							flag2=1;
 							break;
@@ -286,9 +270,6 @@ function solveSudoku(gridSize, grid) {
 
 				if(flag2!=1){
 					/*if there is X, print*/
-					// console.log("X "+solution);
-					// for (i=0; i<gridSize; i++)
-					// console.log(grid[i]);
 					createTable(gridSize, grid, "xsudoku");
 					xSolution++;
 				}
@@ -328,17 +309,11 @@ function solveSudoku(gridSize, grid) {
 				}
 				if(flag3!=1){
 					/*if there is Y, print*/
-					// console.log("Y "+solution);
-					// for (i=0; i<gridSize; i++)
-					// console.log(grid[i]);
 					createTable(gridSize, grid, "ysudoku");
 					ySolution++;
 				}
 				if(flag2==0 && flag3==0){
 					/*if there are both X and Y, print*/
-					// console.log("XY "+solution);
-					// for (i=0; i<gridSize; i++)
-					// console.log(grid[i]);
 					createTable(gridSize, grid, "xysudoku");
 					xySolution++;
 				}
@@ -353,11 +328,22 @@ function solveSudoku(gridSize, grid) {
 				grid[x[counter2]][y[counter2]]="0";
 		}
 	}
-	console.log("REGULAR: "+solution);
-	console.log("X:       "+xSolution);
-	console.log("Y:       "+ySolution);
-	console.log("XY:      "+xySolution);
 	showPossibleSolutions(solution, xSolution, ySolution, xySolution);
+}
+
+function pageInit() {
+	document.getElementById("filecontents").innerText = "";
+	document.getElementById("playabletable").innerText = "";
+	document.getElementById("regular").innerText = "";
+	document.getElementById("xsudoku").innerText = "";
+	document.getElementById("ysudoku").innerText = "";
+	document.getElementById("xysudoku").innerText = "";
+}
+
+function processPuzzles(gridArray, nPuzzles) {
+	for (var i = 0; i < nPuzzles; i++) {
+		createPlayableTable(gridArray[i].length, gridArray[i]);
+	}
 }
 
 window.onload = function () { 
@@ -375,25 +361,25 @@ window.onload = function () {
 	            //Initialize the FileReader object to read the 2file 
 	            var fileReader = new FileReader(); 
 	            fileReader.onload = function (e) { 
-	                var fileContents = document.getElementById('filecontents'); 
+	                var fileContents = document.getElementById("filecontents"); 
 	               // fileContents.innerText = fileReader.result; 
 	                contents = fileReader.result;
 
+	                pageInit();
 					var btn = document.createElement("BUTTON");        // Create a <button> element
 					var t = document.createTextNode("NEXT");       // Create a text node
 					btn.appendChild(t);                                // Append the text to <button>
 					btn.setAttribute('id','next_btn');
-					//fileContents.appendChild(btn);
+					// fileContents.appendChild(btn);
 
 	                tokens = contents.split('\n');
 	                var nPuzzles = tokens[0];
 	                var subgrid, gridSize, line = 1;
 	                var grid = new Array();
+	                var gridArray = new Array();
 	                var i= 0;
 
-	                //for (var i = 0; i < nPuzzles; i++) {
-	                while(i < nPuzzles){
-
+	                for (var i = 0; i < nPuzzles; i++) {
 	                	subgrid = tokens[line];
 	                	line++;
 	                	gridSize = subgrid * subgrid;
@@ -402,23 +388,19 @@ window.onload = function () {
 	                		grid[j] = new Array();
 	                		tokens[line] = tokens[line].replace(/\s/g, "") 
 	                		var num = tokens[line].split("");
-	                		console.log(num);
 	                		for(var k = 0; k < gridSize; k++){
 	                			grid[j].push(num[k]);
 	                		}
 	                		line++;
 	                	}
-                	
-	                	createPlayableTable(gridSize, grid);
-	                	//document.getElementById("next_btn").onclick = function () {
-	                		i++;
-	                	//};
+                		gridArray.push(grid);
+                		grid = new Array();
 	                }
-
-	                		                
+	                
+	            	processPuzzles(gridArray, nPuzzles); 		                
 	            } 
 	            fileReader.readAsText(fileTobeRead); 
-	        } 
+	        }
 	        else { 
 	            alert("Please select text file"); 
 	        }
