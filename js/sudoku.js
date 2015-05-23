@@ -86,6 +86,7 @@ function createPlayableTable(size, grid){
 		document.getElementById("xsudoku").innerHTML = "";
 		document.getElementById("ysudoku").innerHTML = "";
 		document.getElementById("xysudoku").innerHTML = "";
+		loadBlur();
 		solveSudoku(size, grid);
 	};
 	divID.appendChild(document.createElement('br'));
@@ -411,3 +412,15 @@ window.onload = function () {
 	    alert("Files are not supported"); 
 	}
 } 
+
+
+function loadBlur(){
+	
+	document.getElementById('main').setAttribute("class", "blur");
+
+  if(document.getElementById('loadingDiv').style.display == 'none'){
+    document.getElementById('loadingDiv').style.display = 'block';
+  }else{
+    document.getElementById('loadingDiv').style.display = 'none';
+  }
+}
