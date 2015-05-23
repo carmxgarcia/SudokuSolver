@@ -50,7 +50,7 @@ function createPlayableTable(size, grid){
 			var cellID = "cell_"+i+j;
 	        if(grid[i][j] == "0"){
 	        	var inputDiv = document.createElement('div');
-	        	//inputDiv.setAttribute('class', 'form-group');
+	        	inputDiv.setAttribute('class', 'form-group');
 	        	var editable = document.createElement('input');
 	        	editable.maxLength = "1";
 	        	editable.setAttribute('class', 'form-control col-lg');
