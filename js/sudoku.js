@@ -1,5 +1,68 @@
-function checkTable () {
-	alert("hello");
+function checkTable (size,grid) {
+	var subgrid = Math.sqrt(size);
+	for(i=0;i<size;i++){
+		for(j=0;j<size;j++){
+			var a=document.getElementById("cell_"+i+j).value;
+			if(a !="" && a!= undefined){
+				grid[i][j]=a;
+				
+			}
+			if((i<size/2 && j<size/2) || (j>=size/2 && i>=size/2))
+				$("#cell_"+i+j).parent().parent().attr('style','background:#4db6ac !important');
+			else 
+				$("#cell_"+i+j).parent().parent().attr('style','background:#b2dfdb !important');
+		}
+	}
+
+	flag=0;
+	for(i=0;i<size;i++){
+		for(j=0;j<size;j++){
+			for(k=j+1;k<size;k++){
+				if(grid[i][j]==grid[i][k] && grid[i][j]!=0){
+					flag=1;
+					$("#cell_"+i+j).parent().parent().attr('style','background:rgb(244, 84, 84) !important');
+					$("#cell_"+i+k).parent().parent().attr('style','background:rgb(244, 84, 84) !important');
+				}
+				if(grid[j][i]==grid[k][i] && grid[j][i]!=0){
+					flag=1;
+					$("#cell_"+j+i).parent().parent().attr('style','background:rgb(244, 84, 84) !important');
+					$("#cell_"+k+i).parent().parent().attr('style','background:rgb(244, 84, 84) !important');
+				
+				}
+			}
+
+			for (h = 0; h < subgrid; h++) {
+					for(var l = 0; l < subgrid; l++){
+						var a = (Math.floor((i/subgrid))*(subgrid))+h;
+						var b = Math.floor((j/subgrid))*(subgrid)+l;
+							if(grid[a][b] == grid[i][j] && grid[i][j]!=0 && a!=i && b!=j){
+								$("#cell_"+i+j).parent().parent().attr('style','background:rgb(244, 84, 84) !important');				
+								flag = 1;
+								break;
+							}
+					}
+			}
+		}
+	}
+
+	var flag2=0;
+	if(flag==0){
+		for(i=0;i<size;i++){
+			for(j=0;j<size;j++){
+				if(grid[i][j]==0){
+					flag2=1;
+					alert("No error. Please continue");
+					break;
+				}
+			}
+			if(flag2==1) break;
+		}
+
+		if(flag2==0){
+			alert("Congratulations!");
+		}	
+	}
+	
 }
 
 
@@ -111,6 +174,17 @@ function createPlayableTable(size, grid, puzzleNo, totalPuzzle){
 		document.getElementById("xysudoku").innerHTML = "";
 		// loadBlur();
 		solveSudoku(size, grid);
+		//unBlur();
+	};
+
+	document.getElementById("check_btn").onclick = function () {
+		/*console.log("solve daw");
+		document.getElementById("regular").innerHTML = "";
+		document.getElementById("xsudoku").innerHTML = "";
+		document.getElementById("ysudoku").innerHTML = "";
+		document.getElementById("xysudoku").innerHTML = "";*/
+		// loadBlur();
+		checkTable(size, grid);
 		//unBlur();
 	};
 }
