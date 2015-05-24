@@ -8,6 +8,7 @@ function checkUserInput () {
 
 function createPlayableTable(size, grid){
 	var divID=document.getElementById("playabletable");
+	var item = document.createElement('div');
 	var tbl=document.createElement('table');
 	var height = 50;
 	var subgrid = Math.sqrt(size);
@@ -15,11 +16,15 @@ function createPlayableTable(size, grid){
 	var t = document.createTextNode("CHECK");       // Create a text node
 	btn.appendChild(t);                                // Append the text to <button>
 	btn.setAttribute('id','check_btn');
+	btn.setAttribute('class', 'btn btn-success');
 
 	var solve = document.createElement("BUTTON");
 	var u = document.createTextNode("SHOW SOLUTIONS");
 	solve.appendChild(u);                                // Append the text to <button>
 	solve.setAttribute('id','show_sol');
+	solve.setAttribute('class', 'btn btn-success');
+
+	item.setAttribute('class', 'item');
 
 	//tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
@@ -76,11 +81,14 @@ function createPlayableTable(size, grid){
 	}
 	tbl.appendChild(tbdy);
 	tbl.setAttribute('align','center');
-	divID.appendChild(tbl);
-	divID.appendChild(btn);                    // Append <button> to <div> if playable
-	divID.appendChild(solve);
+	item.appendChild(tbl);
+	item.appendChild(btn);                    // Append <button> to <div> if playable
+	item.appendChild(solve);
 
-	divID.appendChild(document.createElement('br'));
+	divID.appendChild(item);
+
+	$('#carousel-example-generic').removeClass('hidden');
+
 	document.getElementById("check_btn").onclick = checkTable;
 	document.getElementById("show_sol").onclick = function () {
 
@@ -94,14 +102,11 @@ function createPlayableTable(size, grid){
 	ydiv.innerHTML = "";
 	xydiv.innerHTML = "";
 
-	loadBlur();
+	// loadBlur();
 	solveSudoku(size, grid);
-	unBlur();
+	//unBlur();
 	
 	};
-	divID.appendChild(document.createElement('br'));
-	divID.appendChild(document.createElement('br'));
-	divID.appendChild(document.createElement('br'));
 }
 
 
@@ -438,6 +443,7 @@ window.onload = function () {
 	                	//};
 	                }
 
+	                $('#playabletable div:first').addClass('active');
 	                		                
 	            } 
 	            fileReader.readAsText(fileTobeRead); 

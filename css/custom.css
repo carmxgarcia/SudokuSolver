@@ -62,3 +62,25 @@ padding-bottom: 15px;
     -webkit-filter: blur(10px);     
     filter: blur(10px);  
 }
+
+#readfile{
+  padding-top: 4%;
+}
+
+
+#show_sol, #check_btn{
+  .btn-primary;
+}
+
+/* Flatten everything */
+* {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+  border-collapse: collapse !important;
+  background-image: none !important;
+  border-radius: 0 !important;
+}
