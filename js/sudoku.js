@@ -2,10 +2,6 @@ function checkTable () {
 	alert("hello");
 }
 
-function checkUserInput () {
-	console.log("checkUserInput");
-}
-
 function createPlayableTable(size, grid){
 	var divID=document.getElementById("playabletable");
 	var tbl=document.createElement('table');
@@ -58,16 +54,11 @@ function createPlayableTable(size, grid){
 
 	        	inputDiv.appendChild(editable);
 	        	td.appendChild(inputDiv);
-
-	        	//console.log(cellID);
-	        	//lol = document.getElementById(cellID);
-	        	//console.log(lol);
 	        }
 	        else{
 	        	var ce = document.createElement('div');
 	        	ce.innerHTML = grid[i][j];
-	        	//ce.setAttribute('contenteditable', false);
-	        	//ce.setAttribute('id', cellID);
+	        	ce.setAttribute('id', cellID);
 	        	td.appendChild(ce);	        	
 	        }
 	    }
@@ -81,12 +72,25 @@ function createPlayableTable(size, grid){
 
 	divID.appendChild(document.createElement('br'));
 	document.getElementById("check_btn").onclick = checkTable;
+
+	for (i=0; i< size; i++){
+		for (j = 0; j < size; j++){
+			var cellID = "cell_"+i+j;
+	        var cell = document.getElementById(cellID);
+	        //console.log(cell);
+	        cell.onchange = function(){
+	        	console.log(cell.type);
+
+	        };
+		}
+	}
+
 	document.getElementById("show_sol").onclick = function () {
 		document.getElementById("regular").innerHTML = "";
 		document.getElementById("xsudoku").innerHTML = "";
 		document.getElementById("ysudoku").innerHTML = "";
 		document.getElementById("xysudoku").innerHTML = "";
-		loadBlur();
+		//loadBlur();
 		solveSudoku(size, grid);
 	};
 	divID.appendChild(document.createElement('br'));
