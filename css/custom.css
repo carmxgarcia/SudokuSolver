@@ -3,6 +3,10 @@
     src: url(../Shoguns_Clan.ttf);
 }
 
+body{
+  background-color: #eee;
+}
+
 .center-center{
 	padding-top: 5%;
 	margin-left: auto;
@@ -23,8 +27,8 @@
 	padding-top: 10;
 }
 
-.table{
-padding-bottom: 15px;
+.item>table{
+margin-bottom: 20px;
 }
 
 
@@ -61,4 +65,52 @@ padding-bottom: 15px;
 .blur {     
     -webkit-filter: blur(10px);     
     filter: blur(10px);  
+}
+
+#readfile{
+  padding-top: 15px;
+}
+
+
+#show_sol, #check_btn{
+  .btn-primary;
+}
+
+/* Flatten everything */
+* {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+  border-collapse: collapse !important;
+  background-image: none !important;
+  border-radius: 0 !important;
+}
+
+span.glyphicon {
+    font-size: 3em;
+    color: #333;
+}
+
+
+
+.puzzle-count{
+  font-size: 2em;
+}
+
+input{
+  background-color: inherit !important;
+  border-color: inherit;
+  font-size: inherit !important;
+  text-align: inherit;
+}
+
+.form-control{
+  border: none !important;
+}
+
+#solutions{
+  padding-top: 70px;
 }

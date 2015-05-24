@@ -2,20 +2,27 @@ function checkTable () {
 	alert("hello");
 }
 
-function createPlayableTable(size, grid){
+
+function createPlayableTable(size, grid, puzzleNo, totalPuzzle){
 	var divID=document.getElementById("playabletable");
+	var item = document.createElement('div');
 	var tbl=document.createElement('table');
+	var puzzleCount = document.createElement('div');
 	var height = 50;
 	var subgrid = Math.sqrt(size);
 	var btn = document.createElement("BUTTON");        // Create a <button> element
 	var t = document.createTextNode("CHECK");       // Create a text node
 	btn.appendChild(t);                                // Append the text to <button>
 	btn.setAttribute('id','check_btn');
+	btn.setAttribute('class', 'btn btn-success');
 
 	var solve = document.createElement("BUTTON");
 	var u = document.createTextNode("SHOW SOLUTIONS");
 	solve.appendChild(u);                                // Append the text to <button>
 	solve.setAttribute('id','show_sol');
+	solve.setAttribute('class', 'btn btn-success');
+
+	item.setAttribute('class', 'item');
 
 	//tbl.style.width= dim+'%';
 	tbl.setAttribute('border','1');
@@ -64,39 +71,69 @@ function createPlayableTable(size, grid){
 	    }
 	    tbdy.appendChild(tr);
 	}
+	puzzleNo++;
+
 	tbl.appendChild(tbdy);
 	tbl.setAttribute('align','center');
-	divID.appendChild(tbl);
-	divID.appendChild(btn);                    // Append <button> to <div> if playable
-	divID.appendChild(solve);
+	tbl.setAttribute('id', 'puzzle-'+puzzleNo);
+	puzzleCount.appendChild(document.createTextNode("Puzzle "+puzzleNo+" of "+totalPuzzle));
+	puzzleCount.setAttribute("class","puzzle-count");
+	item.appendChild(puzzleCount);
+	item.appendChild(tbl);
+	item.appendChild(btn);                    // Append <button> to <div> if playable
+	item.appendChild(solve);
 
-	divID.appendChild(document.createElement('br'));
-	document.getElementById("check_btn").onclick = checkTable;
+	divID.appendChild(item);
 
-	for (i=0; i< size; i++){
-		for (j = 0; j < size; j++){
-			var cellID = "cell_"+i+j;
-	        var cell = document.getElementById(cellID);
-	        //console.log(cell);
-	        cell.onchange = function(){
-	        	console.log(cell.type);
-
-	        };
-		}
+	$('#carousel-example-generic').removeClass('hidden');
+	if(totalPuzzle<2){
+		$('.carousel-control').addClass('hidden');
 	}
 
+	document.getElementById("check_btn").onclick = checkTable;
+
+	// for (i=0; i< size; i++){
+	// 	for (j = 0; j < size; j++){
+	// 		var cellID = "cell_"+i+j;
+	//         var cell = document.getElementById(cellID);
+	//         //console.log(cell);
+	//         cell.onchange = function(){
+	//         	console.log(cell.type);
+	//         };
+	// 	}
+	// }
+
 	document.getElementById("show_sol").onclick = function () {
+		console.log("solve daw");
 		document.getElementById("regular").innerHTML = "";
 		document.getElementById("xsudoku").innerHTML = "";
 		document.getElementById("ysudoku").innerHTML = "";
 		document.getElementById("xysudoku").innerHTML = "";
-		//loadBlur();
+		// loadBlur();
 		solveSudoku(size, grid);
+		//unBlur();
 	};
-	divID.appendChild(document.createElement('br'));
-	divID.appendChild(document.createElement('br'));
-	divID.appendChild(document.createElement('br'));
 }
+
+
+
+
+function loadBlur(){
+	
+	document.getElementById('main').setAttribute("class", "blur");
+
+  // if(document.getElementById('loadingDiv').style.display == 'none'){
+  //   document.getElementById('loadingDiv').style.display = 'block';
+  // }else{
+  //   document.getElementById('loadingDiv').style.display = 'none';
+  // }
+
+}
+
+function unBlur(){
+	document.getElementById('main').setAttribute("class", "center-center");
+}
+
 
 function createTable(size, grid, div){
 	var divID=document.getElementById(div);
@@ -346,21 +383,31 @@ function pageInit() {
 }
 
 function processPuzzles(gridArray, nPuzzles) {
-	if (gridArray.length > 1)
-		document.getElementById('next_btn').style.visibility = '';
-
+	 if (gridArray.length > 1){
+	 	document.getElementById('right').style.visibility = '';
+	 	document.getElementById('left').style.visibility = '';
+	 }
+	
 	var i= 0;
-	createPlayableTable(gridArray[i].length, gridArray[i]);
-	i++;
-	document.getElementById("next_btn").onclick = function (){
-		pageInit();
-		createPlayableTable(gridArray[i].length, gridArray[i]);
+	createPlayableTable(gridArray[i].length, gridArray[i], i, nPuzzles);
+
+	document.getElementById("right").onclick = function (){
 		i++;
-
 		if (i == gridArray.length)
-			document.getElementById('next_btn').setAttribute("disabled", "disabled");
-	};
+			i = 0;
+		pageInit();
+		createPlayableTable(gridArray[i].length, gridArray[i], i, nPuzzles);
+		console.log(i);
+	}
 
+	document.getElementById("left").onclick = function (){
+		i--;
+		if (i < 0)
+			i = (gridArray.length)-1;
+		pageInit();
+		createPlayableTable(gridArray[i].length, gridArray[i], i, nPuzzles);
+		console.log(i);
+	}
 }
 
 window.onload = function () { 
@@ -373,15 +420,14 @@ window.onload = function () {
 	        var fileExtension = /text.*/; 
 	        //Get the file object 
 	        var fileTobeRead = fileSelected.files[0];
-	        //Check of the extensio match 
+	        //Check of the extension match 
 	        if (fileTobeRead.type.match(fileExtension)) { 
 	            //Initialize the FileReader object to read the 2file 
 	            var fileReader = new FileReader(); 
 	            fileReader.onload = function (e) { 
 	                var fileContents = document.getElementById("filecontents"); 
-	               // fileContents.innerText = fileReader.result; 
+	                fileContents.innerText = fileReader.result; 
 	                contents = fileReader.result;
-
 	                pageInit();
 					// var btn = document.createElement("BUTTON");        // Create a <button> element
 					// var t = document.createTextNode("NEXT");       // Create a text node
@@ -413,8 +459,7 @@ window.onload = function () {
                 		gridArray.push(grid);
                 		grid = new Array();
 	                }
-	                
-	            	processPuzzles(gridArray, nPuzzles); 		                
+	            	processPuzzles(gridArray, nPuzzles); 		                             
 	            } 
 	            fileReader.readAsText(fileTobeRead); 
 	        }
@@ -429,12 +474,3 @@ window.onload = function () {
 	}
 } 
 
-
-function loadBlur(){
-	document.getElementById('main').setAttribute("class", "blur");
-	if(document.getElementById('loadingDiv').style.display == 'none'){
-		document.getElementById('loadingDiv').style.display = 'block';
-	}else{
-		document.getElementById('loadingDiv').style.display = 'none';
-	}
-}

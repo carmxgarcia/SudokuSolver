@@ -1,11 +1,11 @@
 <html>
 	<head>
 		<!-- REMOVE/MODIFY UI, THIS IS JUST FOR TESTING PURPOSES ONLY -->
+
 		<link rel="stylesheet" href="./css/bootstrap.min.css">
-		<link href="css/roboto.min.css" rel="stylesheet">
-    <link href="css/material.min.css" rel="stylesheet">
-    <link href="css/ripples.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+		<link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+    	<link href="css/custom.css" rel="stylesheet">
+    	<link rel="icon" type="image/gif" href="./Preloader_7.gif" />
 		<title>
 			Sudoku Solver
 		</title>
@@ -13,36 +13,56 @@
 	<body>
 
 
-	<center>
 
-<div id="loadingDiv" style="display:none">
-	<img id="loading" src="./Preloader_7.gif"/>
-</div>
+
+	<div id="loadingDiv" style="display:none">
+		<img id="loading" src="./Preloader_7.gif"/>
+	</div>
 
 
   <div id="main" class="center-center">
 	  <div class="title"> SUDOKU SOLVER </div>
-
+	  	<center>
 		<div id = "readfile" class="col-lg-12">
 			<span class="btn btn-primary btn-file">
 				Browse <input type="file" id="txtfiletoread">
 			</span>
 		</div>
+		</center>
 
 		<div id = "filecontents" class="col-lg-12">
 			<br>
 		</div>
 
-		<div id = "next" class="col-lg-12">
-			<button class="btn btn-success" id="next_btn" style="visibility: hidden">
-				Next Puzzle
-			</button>
+
+		<!--div id="carousel-example-generic" class="carousel slide hidden col-lg-6 col-lg-offset-3" data-ride="carousel" data-interval="false"-->
+
+			<!-- Wrapper for slides -->
+
+
+			<!-- Controls -->
+		<div class="col-lg-4">
+		  <a role="button" data-slide="prev" id="left" class="pull-right" style="visibility:hidden">
+		    <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+		  </a>
+		 </div>
+
+		<center>
+			<div id="playabletable" class="col-lg-4">
+			</div>
+		</center>
+
+		<div class="col-lg-4">
+		  <a role="button" data-slide="next" id="right" style="visibility:hidden">
+		    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true" ></span>
+		  </a>
 		</div>
 
-		<div id = "playabletable" class="col-lg-12">
-		</div>
+		<!--/div-->
 
-		<div id = "solutions" class="row" class="col-lg-10">
+
+		<center>
+		<div id = "solutions"  class="col-lg-12">
 			<div id = "regular" class="col-lg-3">
 			</div>
 
@@ -58,9 +78,14 @@
 				<br><br><br><br><br>
 			</div>
 		</div>
+		</center>
 
-		</div>
-	</center>
+
+
+	</div>
+
 	</body>
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/sudoku.js"></script>
 </html>
