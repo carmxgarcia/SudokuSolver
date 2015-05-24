@@ -6,10 +6,11 @@ function checkUserInput () {
 	console.log("checkUserInput");
 }
 
-function createPlayableTable(size, grid){
+function createPlayableTable(size, grid, puzzleNo, totalPuzzle){
 	var divID=document.getElementById("playabletable");
 	var item = document.createElement('div');
 	var tbl=document.createElement('table');
+	var puzzleCount = document.createElement('div');
 	var height = 50;
 	var subgrid = Math.sqrt(size);
 	var btn = document.createElement("BUTTON");        // Create a <button> element
@@ -79,8 +80,14 @@ function createPlayableTable(size, grid){
 	    }
 	    tbdy.appendChild(tr);
 	}
+	puzzleNo++;
+
 	tbl.appendChild(tbdy);
 	tbl.setAttribute('align','center');
+	tbl.setAttribute('id', 'puzzle-'+puzzleNo);
+	puzzleCount.appendChild(document.createTextNode("Puzzle "+puzzleNo+" of "+totalPuzzle));
+	puzzleCount.setAttribute("class","puzzle-count");
+	item.appendChild(puzzleCount);
 	item.appendChild(tbl);
 	item.appendChild(btn);                    // Append <button> to <div> if playable
 	item.appendChild(solve);
@@ -88,6 +95,9 @@ function createPlayableTable(size, grid){
 	divID.appendChild(item);
 
 	$('#carousel-example-generic').removeClass('hidden');
+	if(totalPuzzle<2){
+		$('.carousel-control').addClass('hidden');
+	}
 
 	document.getElementById("check_btn").onclick = checkTable;
 	document.getElementById("show_sol").onclick = function () {
@@ -437,7 +447,7 @@ window.onload = function () {
 	                		line++;
 	                	}
                 	
-	                	createPlayableTable(gridSize, grid);
+	                	createPlayableTable(gridSize, grid, i, nPuzzles);
 	                	//document.getElementById("next_btn").onclick = function () {
 	                		i++;
 	                	//};
