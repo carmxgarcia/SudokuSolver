@@ -172,9 +172,10 @@ function createPlayableTable(size, grid, puzzleNo, totalPuzzle){
 		document.getElementById("xsudoku").innerHTML = "";
 		document.getElementById("ysudoku").innerHTML = "";
 		document.getElementById("xysudoku").innerHTML = "";
-		// loadBlur();
+		//loadBlur();
 		solveSudoku(size, grid);
 		//unBlur();
+
 	};
 
 	document.getElementById("check_btn").onclick = function () {
@@ -195,17 +196,17 @@ function createPlayableTable(size, grid, puzzleNo, totalPuzzle){
 function loadBlur(){
 	
 	document.getElementById('main').setAttribute("class", "blur");
-
-  // if(document.getElementById('loadingDiv').style.display == 'none'){
-  //   document.getElementById('loadingDiv').style.display = 'block';
-  // }else{
-  //   document.getElementById('loadingDiv').style.display = 'none';
-  // }
+	//if(document.getElementById('loadingDiv').style.display == 'none'){
+	document.getElementById('loadingDiv').style.display = 'block';
 
 }
 
 function unBlur(){
-	document.getElementById('main').setAttribute("class", "center-center");
+	//document.getElementById('main').setAttribute("class", "center-center");
+	setTimeout(function(){
+		document.getElementById('main').setAttribute("class", "");
+		document.getElementById('loadingDiv').style.display = 'none';
+ 	}, 3000);
 }
 
 
@@ -470,6 +471,10 @@ function processPuzzles(gridArray, nPuzzles) {
 		if (i == gridArray.length)
 			i = 0;
 		pageInit();
+		//setTimeout(function(){ document.getElementById('playabletable').setAttribute("class", "blur");
+ //}, 0);
+		//setTimeout(function(){ document.getElementById('playabletable').setAttribute("class", "");
+ //}, 1000);
 		createPlayableTable(gridArray[i].length, gridArray[i], i, nPuzzles);
 		console.log(i);
 	}
