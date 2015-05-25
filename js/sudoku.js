@@ -1,16 +1,28 @@
 function checkTable (size,grid) {
 	var subgrid = Math.sqrt(size);
+	var k=0;
+	var x=[],y=[];
 	for(i=0;i<size;i++){
 		for(j=0;j<size;j++){
 			var a=document.getElementById("cell_"+i+j).value;
 			if(a !="" && a!= undefined){
 				grid[i][j]=a;
-				
+				x.push(i);				
+				y.push(j);
 			}
-			if((i<size/2 && j<size/2) || (j>=size/2 && i>=size/2))
-				$("#cell_"+i+j).parent().parent().attr('style','background:#4db6ac !important');
-			else 
-				$("#cell_"+i+j).parent().parent().attr('style','background:#b2dfdb !important');
+			if(size == 4){
+		      	if ((j < subgrid && i < subgrid) || (i >= subgrid && j >= subgrid))
+		        	$("#cell_"+i+j).parent().parent().attr('style','background:#4db6ac !important');
+		        else
+					$("#cell_"+i+j).parent().parent().attr('style','background:#b2dfdb !important');	        	
+	        }
+
+	        if(size == 9){
+		      	if ((j < subgrid && i < subgrid) || (i < subgrid && j >= 2*subgrid) || (i >= 2*subgrid && j >= 2*subgrid) || (i >= 2*subgrid && j < subgrid) || (i < 2*subgrid && i >= subgrid && j < 2*subgrid && j >= subgrid))
+		        	$("#cell_"+i+j).parent().parent().attr('style','background:#4db6ac !important');
+		        else
+					$("#cell_"+i+j).parent().parent().attr('style','background:#b2dfdb !important');	        	
+	        }
 		}
 	}
 
@@ -18,6 +30,10 @@ function checkTable (size,grid) {
 	for(i=0;i<size;i++){
 		for(j=0;j<size;j++){
 			for(k=j+1;k<size;k++){
+				if(!(grid[i][j]>=0 && grid[i][j]<size)){
+					$("#cell_"+i+j).parent().parent().attr('style','background:rgb(244, 84, 84) !important');
+					flag=1;
+				}
 				if(grid[i][j]==grid[i][k] && grid[i][j]!=0){
 					flag=1;
 					$("#cell_"+i+j).parent().parent().attr('style','background:rgb(244, 84, 84) !important');
@@ -27,7 +43,7 @@ function checkTable (size,grid) {
 					flag=1;
 					$("#cell_"+j+i).parent().parent().attr('style','background:rgb(244, 84, 84) !important');
 					$("#cell_"+k+i).parent().parent().attr('style','background:rgb(244, 84, 84) !important');
-				
+					
 				}
 			}
 
@@ -61,6 +77,10 @@ function checkTable (size,grid) {
 		if(flag2==0){
 			alert("Congratulations!");
 		}	
+	}
+
+	for(i=0;i<x.length;i++){
+		grid[x[i]][y[i]]=0;
 	}
 	
 }
@@ -296,11 +316,23 @@ function solveSudoku(gridSize, grid) {
 	var move, start;
 	var counter = 0, counter2 = 0, tmp = 0, candidate, flag = 0, solution = 0, flag2 = 0;
 	var flag3=0,solution=0,xSolution=0,ySolution=0,xySolution=0;
-	var x=[], y=[];
+	var x=[], y=[],xx=[], yy=[];
 	var dim = (gridSize*gridSize)+2;
 	var nopts = new Array();
 	var option = new Array();		//array stacks of option
 	var subgrid = Math.sqrt(gridSize);
+	var size=gridSize;
+
+	for(i=0;i<size;i++){
+		for(j=0;j<size;j++){
+			var a=document.getElementById("cell_"+i+j).value;
+			if(a !="" && a!= undefined){
+				grid[i][j]=a;
+				xx.push(i);				
+				yy.push(j);
+			}
+		}
+	}
 
 	for (var i = 0; i < gridSize; i++) {
 		for (var j = 0; j < gridSize; j++) {
@@ -446,6 +478,9 @@ function solveSudoku(gridSize, grid) {
 		}
 	}
 	showPossibleSolutions(solution, xSolution, ySolution, xySolution);
+	for(i=0;i<xx.length;i++){
+		grid[xx[i]][yy[i]]=0;
+	}
 }
 
 function pageInit() {
