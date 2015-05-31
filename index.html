@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<!-- REMOVE/MODIFY UI, THIS IS JUST FOR TESTING PURPOSES ONLY -->
+
+		<link rel="stylesheet" href="./css/bootstrap.min.css">
+		<link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+    	<link href="css/custom.css" rel="stylesheet">
+    	<link rel="icon" type="image/gif" href="./Preloader_7.gif" />
+		<title>
+			Sudoku Solver
+		</title>
+	</head>
+	<body>
+
+
+
+
+	<div id="loadingDiv" style="display:none">
+		<img id="loading" src="./Preloader_7.gif"/>
+	</div>
+
+
+  <div id="main" class="center-center">
+	  <div class="title"> SUDOKU SOLVER </div>
+	  	<center>
+		<div id = "readfile" class="col-lg-12">
+			<span class="btn btn-primary btn-file">
+				Browse <input type="file" id="txtfiletoread">
+			</span>
+		</div>
+		</center>
+
+		<div id = "filecontents" class="col-lg-12">
+			<br>
+		</div>
+
+
+			<!-- Controls -->
+		<div class="col-lg-4">
+		  <a class="right carousel-control" role="button" data-slide="prev" id="left" style="visibility:hidden">
+		    <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+		  </a>
+		 </div>
+
+		<center>
+			<div id="playabletable" class="col-lg-4">
+			</div>
+		</center>
+
+		<div class="col-lg-4">
+		  <a class="carousel-control" role="button" data-slide="next" id="right" style="visibility:hidden">
+		    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true" ></span>
+		  </a>
+		</div>
+
+<br/><br><br><br><br><br>
+
+			<div id = "sol" class="col-lg-8" style="visibility:hidden; margin-top: 50px; margin-left: 250px;">
+			<ul class="nav nav-pills nav-justified">
+			  <li ><a href="#regular" data-toggle="tab">Regular Sudoku</a></li>
+			  <li ><a href="#xsudoku" data-toggle="tab">X Sudoku</a></li>
+			  <li ><a href="#ysudoku" data-toggle="tab">Y Sudoku</a></li>
+			  <li ><a href="#xysudoku" data-toggle="tab">XY Sudoku</a></li>
+			</ul>
+
+			<div class="tab-content">
+
+
+			<div id = "regular" class="col-lg-5 tab-pane ctr" >
+				<br><br><br><br><br>
+			</div>
+
+			<div id = "xsudoku" class="col-lg-5 tab-pane ctr" >
+				<br><br><br><br><br>
+			</div>
+
+			<div id = "ysudoku" class="col-lg-5 tab-pane ctr" >
+				<br><br><br><br><br>
+			</div>
+
+			<div id = "xysudoku" class="col-lg-5 tab-pane ctr" >
+				<br><br><br><br><br>
+			</div>
+			</div>
+	
+
+
+
+	</div>
+<br><br><br><br><br>
+	</body>
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/sudoku.js"></script>
+</html>
