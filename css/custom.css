@@ -1,3 +1,6 @@
+.ctr{
+  margin-left: 200px !important;
+}
 @font-face {
     font-family: SCFont;
     src: url(../Shoguns_Clan.ttf);

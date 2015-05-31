@@ -53,103 +53,43 @@
 		  </a>
 		</div>
 
-<div id="rootwizard">
-	<ul class="nav nav-pills">
-	  	<li><a href="#tab1" class="active" data-toggle="tab">First</a></li>
-		<li><a href="#tab2" data-toggle="tab">Second</a></li>
-		<li><a href="#tab3" data-toggle="tab">Third</a></li>
-		<li><a href="#tab4" data-toggle="tab">Forth</a></li>
-		<li><a href="#tab5" data-toggle="tab">Fifth</a></li>
-		<li><a href="#tab6" data-toggle="tab">Sixth</a></li>
-		<li><a href="#tab7" data-toggle="tab">Seventh</a></li>
-	</ul>
-	<div class="tab-content">
-	    <div class="tab-pane" id="tab1">
-	      1
-	    </div>
-	    <div class="tab-pane" id="tab2">
-	      2
-	    </div>
-		<div class="tab-pane" id="tab3">
-			3
-	    </div>
-		<div class="tab-pane" id="tab4">
-			4
-	    </div>
-		<div class="tab-pane" id="tab5">
-			5
-	    </div>
-		<div class="tab-pane" id="tab6">
-			6
-	    </div>
-		<div class="tab-pane" id="tab7">
-			7
-	    </div>
-		<ul class="pager wizard">
-			<li class="previous first" style="display:none;"><a href="#">First</a></li>
-			<li class="previous"><a href="#">Previous</a></li>
-			<li class="next last" style="display:none;"><a href="#">Last</a></li>
-		  	<li class="next"><a href="#">Next</a></li>
-		</ul>
-	</div>	
-</div>
+<br/><br><br><br><br><br>
+
+			<div id = "sol" class="col-lg-8" style="visibility:hidden; margin-top: 50px; margin-left: 250px;">
+			<ul class="nav nav-pills nav-justified">
+			  <li ><a href="#regular" data-toggle="tab">Regular Sudoku</a></li>
+			  <li ><a href="#xsudoku" data-toggle="tab">X Sudoku</a></li>
+			  <li ><a href="#ysudoku" data-toggle="tab">Y Sudoku</a></li>
+			  <li ><a href="#xysudoku" data-toggle="tab">XY Sudoku</a></li>
+			</ul>
+
+			<div class="tab-content">
 
 
-		<center>
-		<div id = "solutions"  class="col-lg-12">
-			<!-- <div id = "regular" class="col-lg-3">
-			</div>
-
-			<div id = "xsudoku" class="col-lg-3" >
+			<div id = "regular" class="col-lg-5 tab-pane ctr" >
 				<br><br><br><br><br>
 			</div>
 
-			<div id = "ysudoku" class="col-lg-3" >
+			<div id = "xsudoku" class="col-lg-5 tab-pane ctr" >
 				<br><br><br><br><br>
 			</div>
 
-			<div id = "xysudoku" class="col-lg-3" >
+			<div id = "ysudoku" class="col-lg-5 tab-pane ctr" >
 				<br><br><br><br><br>
-			</div> -->
-			 <ul class="nav nav-pills nav-justified">
-				  <li role="presentation" class="active">
-				  <a href="#">Regular Sudoku</a>
-				  	<div id = "regular" class="col-lg-3">
-					</div>
-				  </li>
-				  	
-				  <li role="presentation"><a href="#">X</a>
-				  	<div id = "xsudoku" class="col-lg-3" >
-						<br><br><br><br><br>
-					</div>
-				  </li>
-				  <li role="presentation"><a href="#">Y</a>
-				  		<div id = "ysudoku" class="col-lg-3" >
-							<br><br><br><br><br>
-						</div>
-				  </li>
-				  <li role="presentation"><a href="#">XY</a>
-				  		<div id = "xysudoku" class="col-lg-3" >
-							<br><br><br><br><br>
-						</div>
-				  </li>
-			</ul> 
-		</div>
+			</div>
 
-
-		</center>
+			<div id = "xysudoku" class="col-lg-5 tab-pane ctr" >
+				<br><br><br><br><br>
+			</div>
+			</div>
+	
 
 
 
 	</div>
-
+<br><br><br><br><br>
 	</body>
 	<script src="js/jquery-1.11.2.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/sudoku.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-  		$('#rootwizard').bootstrapWizard({'tabClass': 'nav nav-pills'});
-	});
-	</script>
 </html>

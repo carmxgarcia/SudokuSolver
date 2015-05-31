@@ -168,10 +168,7 @@ function createPlayableTable(size, grid, puzzleNo, totalPuzzle){
 
 	divID.appendChild(item);
 
-	$('#carousel-example-generic').removeClass('hidden');
-	if(totalPuzzle<2){
-		$('.carousel-control').addClass('hidden');
-	}
+	
 
 	document.getElementById("check_btn").onclick = checkTable;
 
@@ -194,6 +191,8 @@ function createPlayableTable(size, grid, puzzleNo, totalPuzzle){
 		document.getElementById("xysudoku").innerHTML = "";
 		//loadBlur();
 		solveSudoku(size, grid);
+		document.getElementById('sol').style.visibility = '';
+		
 		//unBlur();
 
 	};
@@ -478,6 +477,7 @@ function solveSudoku(gridSize, grid) {
 		}
 	}
 	showPossibleSolutions(solution, xSolution, ySolution, xySolution);
+
 	for(i=0;i<xx.length;i++){
 		grid[xx[i]][yy[i]]=0;
 	}
